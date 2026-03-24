@@ -6,7 +6,7 @@ import Card from 'react-bootstrap/Card'
 import Axios from 'axios'
 
 //
-import MessageComponent from './MessageComponent'
+import MessageComponent from '../components/MessageComponent'
 
 function Home() {
   const [showMessage, setShowMessage] = useState(false)
@@ -53,7 +53,6 @@ function Home() {
     symbol: '',
   })
 
-
   // fetch data API Rest - CoinDesk
   useEffect(() => {
     const fetchData = async () => {
@@ -66,16 +65,13 @@ function Home() {
           setMarket(response.data.bpi.EUR)
         })
         .catch((error) => {
-          setMensajeError(
-            'Error API Rest: ' + error.message,
-          )
+          setMensajeError('Error API Rest: ' + error.message)
           setShowMessage(true)
         })
     }
     fetchData()
   }, [])
 
-  
   const changeMarket = () => {
     try {
       if (market.code == 'EUR') {
@@ -101,9 +97,13 @@ function Home() {
         <Card.Body>
           <Card.Title>{market.description}</Card.Title>
           <Card.Text>{market.rate}</Card.Text>
-          <Button variant="primary" onClick={changeMarket}>
-            Change Coin
-          </Button>
+
+          {/* hacemos que el boton aparezca solo si no hay error en el hook de mensajeError */}
+          {mensajeError.trim() === '' && (
+            <Button variant="primary" onClick={changeMarket}>
+              Change Coin
+            </Button>
+          )}
         </Card.Body>
         <Card.Footer>
           <Card.Text>
