@@ -7,16 +7,19 @@ import NotFound from '../components/NotFound404'
 import Features from '../components/Features'
 import Footer from '../components/Footer'
 
+import MainLayout from '../layouts/MainLayout'
+
 function RouterApp() {
   return (
     <BrowserRouter>
-      <NavBar></NavBar>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="*" element={<NotFound />} />
-        <Route path="/features" element={<Features />} />
+        {/* Rutas que comparten el layout */}
+        <Route path="/" element={<MainLayout />}>
+          <Route index element={<Home />} />
+          <Route path="features" element={<Features />} />
+          <Route path="*" element={<NotFound />} />
+        </Route>
       </Routes>
-      <Footer></Footer>
     </BrowserRouter>
   )
 }
